@@ -1,4 +1,5 @@
 from math import pi, atan2, sqrt, cos, sin, fabs
+from decimal import *
 from decimal import Decimal as d
 
 from pygame.locals import *
@@ -13,7 +14,8 @@ class SpaceSim:
         self.interface = interface
         self.step = 0
         self.running = True
-        
+        getcontext().prec = 9
+
     def run(self):
     
         while self.running:      
