@@ -1,5 +1,5 @@
 from math import pi, atan2, sqrt, cos, sin, fabs
-#from decimal import Decimal as d
+from decimal import Decimal as d
 
 from pygame.locals import *
 
@@ -71,16 +71,16 @@ class SpaceSim:
                 secondary_radius = secondary.get_radius()
                                                                                 
                 theta = atan2((secondary_y_pos - primary_y_pos), (secondary_x_pos - primary_x_pos))
-                F_p = self.G * (secondary_mass * primary_mass) / ((secondary_y_pos - primary_y_pos)**2 + (secondary_x_pos - primary_x_pos)**2)
+                F_p = d(str(self.G * (secondary_mass * primary_mass))) / ((secondary_y_pos - primary_y_pos)**2 + (secondary_x_pos - primary_x_pos)**2)
 
                 
-                primary_x_force = primary_x_force) + (F_p * cos(theta))
-                primary_y_force = primary_y_force) + (F_p * sin(theta))
+                primary_x_force = d(str(primary_x_force)) + (F_p * d(str(cos(theta))))
+                primary_y_force = d(str(primary_y_force)) + (F_p * d(str(sin(theta))))
 
 
 
-        primary_x_acc = (primary_x_force / primary_mass)
-        primary_y_acc = (primary_y_force / primary_mass)
+        primary_x_acc = (primary_x_force / d(str(primary_mass)))
+        primary_y_acc = (primary_y_force / d(str(primary_mass)))
       
         #update variables in model
         primary.set_xacc(primary_x_acc)
@@ -97,10 +97,10 @@ class SpaceSim:
         primary_y_acc = primary.get_yacc()
 
         #x
-        primary_x_vel_t = primary_x_vel + self.timestep * primary_x_acc
+        primary_x_vel_t = primary_x_vel + d(str(self.timestep)) * d(str(primary_x_acc)) 
 
         #todo: add runge-kutta integration
-        primary_x_pos = primary_x_pos + self.timestep * (primary_x_vel + primary_x_vel_t) / 2.0
+        primary_x_pos = primary_x_pos + self.timestep * (primary_x_vel + primary_x_vel_t)/ d('2.0')
         primary_x_vel = primary_x_vel_t
 
         #update variables in model
@@ -108,8 +108,8 @@ class SpaceSim:
         primary.set_xpos(primary_x_pos)
        
         #y
-        primary_y_vel_t = primary_y_vel + self.timestep * primary_y_acc
-        primary_y_pos = primary_y_pos + self.timestep * (primary_y_vel + primary_y_vel_t) / 2.0
+        primary_y_vel_t = primary_y_vel + d(str(self.timestep)) * d(str(primary_y_acc)) 
+        primary_y_pos = primary_y_pos + self.timestep * (primary_y_vel + primary_y_vel_t)/d('2.0') 
         primary_y_vel = primary_y_vel_t
 
         #update variables in model

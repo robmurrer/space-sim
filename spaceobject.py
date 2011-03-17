@@ -1,4 +1,4 @@
-#from decimal import Decimal as d
+from decimal import Decimal as d
 
 class SpaceObject:
 
@@ -7,16 +7,16 @@ class SpaceObject:
         self.name = name
         self.mass = mass
         self.radius = radius
-        self.xpos = xpos
-        self.xpos_t = 0
-        self.ypos = ypos
-        self.ypos_t = 0
-        self.xvel = xvel
-        self.xvel_t = 0
-        self.yvel = yvel
-        self.yvel_t = 0
-        self.xacc = 0
-        self.yacc = 0
+        self.xpos = d(str(xpos))
+        self.xpos_t = d('0')
+        self.ypos = d(str(ypos))
+        self.ypos_t = d('0')
+        self.xvel = d(str(xvel))
+        self.xvel_t = d('0')
+        self.yvel = d(str(yvel))
+        self.yvel_t = d('0')
+        self.xacc = d('0')
+        self.yacc = d('0')
 
     #doesn't work for some reason
     def __unicode__(self):
