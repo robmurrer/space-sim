@@ -1,24 +1,19 @@
 from math import pi, atan2, sqrt, cos, sin, fabs
-<<<<<<< HEAD
-from decimal import *
-from decimal import Decimal as d
-=======
-#from decimal import Decimal as d
->>>>>>> parent of 7587651... Revert "single percision"
-
 from pygame.locals import *
 
 class SpaceSim:
 
-    def __init__(self, SpaceObjects, G, timestep, maxstep, interface):
-        self.SpaceObjects = SpaceObjects
-        self.G = G
-        self.timestep = timestep
-        self.maxstep = maxstep
-        self.interface = interface
+    def __init__(self, **kwargs):
+    
+        self.SpaceObjects = kwargs['SpaceObjects']
+        self.G = kwargs['G']
+        self.maxstep = kwargs['maxstep']
+        self.interface = kwargs['interface']
+
+        
         self.step = 0
         self.running = True
-        getcontext().prec = 9
+
 
     def run(self):
     
@@ -54,14 +49,10 @@ class SpaceSim:
     #calculate and sum accelerations
     def __calcAcc(self, primary):
     
-        primary_x_pos = primary.get_xpos()
-        primary_y_pos = primary.get_ypos()
-        primary_x_vel = primary.get_xvel()
-        primary_y_vel = primary.get_yvel()
-        primary_x_acc = 0.0
-        primary_y_acc = 0.0
-        primary_x_force = 0.0
-        primary_y_force = 0.0
+        primary_pos = primary.get_pos()
+        primary_vel = primary.get_vel()
+        primary_acc = (0.0, 0.0)
+        primary_force = (0.0, 0.0)
         primary_mass = primary.get_mass()
        
 
@@ -70,57 +61,37 @@ class SpaceSim:
 
             if secondary != primary:
                 
-                secondary_x_pos = secondary.get_xpos()
-                secondary_y_pos = secondary.get_ypos()
-
+                secondary_pos = secondary.get_pos()
                 secondary_mass = secondary.get_mass()
                 secondary_radius = secondary.get_radius()
                                                                                 
-                theta = atan2((secondary_y_pos - primary_y_pos), (secondary_x_pos - primary_x_pos))
-                F_p = self.G * (secondary_mass * primary_mass) / ((secondary_y_pos - primary_y_pos)**2 + (secondary_x_pos - primary_x_pos)**2)
-
+                theta = atan2((secondary_pos[1] - primary_pos[1]), (secondary_pos[0] - primary_pos[0]))
+                F_p = self.G * (secondary_mass * primary_mass) / ((secondary_pos[1] - primary_pos[1])**2 + (secondary_pos[0] - primary_pos[0])**2)
                 
-                primary_x_force = primary_x_force + (F_p * cos(theta))
-                primary_y_force = primary_y_force + (F_p * sin(theta))
+                primary_force = ((primary_force[0] + (F_p * cos(theta))), (primary_force[1] + (F_p * sin(theta))))
 
-
-
-        primary_x_acc = (primary_x_force / primary_mass)
-        primary_y_acc = (primary_y_force / primary_mass)
+        primary_acc = ((primary_force[0] / primary_mass), (primary_force[1] / primary_mass))
       
         #update variables in model
-        primary.set_xacc(primary_x_acc)
-        primary.set_yacc(primary_y_acc)
+        primary.set_acc(primary_acc)
+
 
     #calculate velocities and positions            
     def __calcVelPos(self, primary):
     
-        primary_x_pos = primary.get_xpos()
-        primary_y_pos = primary.get_ypos()
-        primary_x_vel = primary.get_xvel()
-        primary_y_vel = primary.get_yvel()
-        primary_x_acc = primary.get_xacc()
-        primary_y_acc = primary.get_yacc()
+        primary_pos = primary.get_pos()
 
-        #x
-        primary_x_vel_t = primary_x_vel + self.timestep * primary_x_acc
+        primary_vel = primary.get_vel()
 
-        #todo: add runge-kutta integration
-        primary_x_pos = primary_x_pos + self.timestep * (primary_x_vel + primary_x_vel_t) / 2.0
-        primary_x_vel = primary_x_vel_t
+        primary_acc = primary.get_acc()
+
+        
+        primary_vel = ((primary_vel[0] + primary_acc[0]), (primary_vel[1] + primary_acc[1]))
+        primary_pos = ((primary_pos[0] + primary_vel[0]), (primary_pos[1] + primary_vel[1]))
 
         #update variables in model
-        primary.set_xvel(primary_x_vel)
-        primary.set_xpos(primary_x_pos)
-       
-        #y
-        primary_y_vel_t = primary_y_vel + self.timestep * primary_y_acc
-        primary_y_pos = primary_y_pos + self.timestep * (primary_y_vel + primary_y_vel_t) / 2.0
-        primary_y_vel = primary_y_vel_t
-
-        #update variables in model
-        primary.set_yvel(primary_y_vel)
-        primary.set_ypos(primary_y_pos)
+        primary.set_vel(primary_vel)
+        primary.set_pos(primary_pos)
 
              
                      

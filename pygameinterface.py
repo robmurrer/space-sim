@@ -5,27 +5,34 @@ import time
 
 class PygameInterface:
 
-    def __init__(self):
+    def __init__(self, **kwargs):
+    
         pygame.init()
-        self.screen = pygame.display.set_mode((1100, 800))
+        self.screen = pygame.display.set_mode((kwargs['window_size'][0], kwargs['window_size'][1]))
+        
         pygame.display.set_caption("Space Sim")
+        
         self.background = pygame.Surface(self.screen.get_size())
         self.background = self.background.convert()
+
         self.background.fill((0, 0, 0))
         self.screen.blit(self.background, (0, 0))
 
         self.font = pygame.font.SysFont(pygame.font.get_default_font(), 20)
         self.clock = pygame.time.Clock()
-        
-        pygame.display.flip()
 
         #camera stuff
         self.camera_width, self.camera_height = self.background.get_size()
-        self.camera_center_x = 400
-        self.camera_center_y = 400
-        self.camera_zoom = 1
-        self.camera_zoom_step = .9
-        self.camera_scroll_step = 200
+        self.camera_center_x = kwargs['camera_center'][0]
+        self.camera_center_y = kwargs['camera_center'][1]
+        self.camera_zoom = kwargs['camera_zoom']
+        self.camera_zoom_step = kwargs['camera_zoom_step']
+        self.camera_scroll_step = kwargs['camera_scroll_step']
+        
+        #todo: add initial draw of objects
+        pygame.display.flip()
+
+       
         
     def update(self, SpaceObjects):
 
@@ -50,12 +57,12 @@ class PygameInterface:
         #update each objects position
         for obj in SpaceObjects:
             #calculate screen coordinates and scale changes
-            screen_x = self.camera_width/2.0 + round((float(obj.get_xpos()) - self.camera_center_x) * self.camera_zoom)
-            screen_y = self.camera_height/2.0 - round((float(obj.get_ypos()) - self.camera_center_y) * self.camera_zoom)
+            screen_x = self.camera_width/2.0 + round((obj.get_pos()[0] - self.camera_center_x) * self.camera_zoom)
+            screen_y = self.camera_height/2.0 - round((obj.get_pos()[1] - self.camera_center_y) * self.camera_zoom)
             screen_r = round(obj.get_radius() * self.camera_zoom)
 
             #draw object
-            pygame.draw.circle(self.background, (250,250,250), (screen_x, screen_y), screen_r, 0)
+            pygame.draw.circle(self.background, obj.get_color(), (screen_x, screen_y), screen_r, 0)
 
             #update buffer    
             self.screen.blit(self.background, (0, 0))

@@ -2,65 +2,45 @@
 
 class SpaceObject:
 
-    def __init__(self, name, mass, radius, xpos, ypos, xvel, yvel):
+    def __init__(self, **kwargs):
 
-        self.name = name
-        self.mass = mass
-        self.radius = radius
-        self.xpos = xpos
-        self.xpos_t = 0
-        self.ypos = ypos
-        self.ypos_t = 0
-        self.xvel = xvel
-        self.xvel_t = 0
-        self.yvel = yvel
-        self.yvel_t = 0
-        self.xacc = 0
-        self.yacc = 0
+        self.name = kwargs['name']
+        self.mass =  kwargs['mass']
+        self.radius =  kwargs['radius']
 
-    #doesn't work for some reason
-    def __unicode__(self):
-        return self.name + '\t' + str(self.xpos) + '\t' + str(self.ypos)
+        self.pos =  kwargs['pos']
+        self.pos_t = (0,0)
+       
+        self.vel =  kwargs['vel']
+        self.vel_t = (0,0)
+ 
+        self.acc = (0,0)
+
+
+        if not kwargs['color']:
+            self.color = (255,255,255)
+        else:
+            self.color = kwargs['color']
+            
+    def get_pos(self):
+        return self.pos
+
+    def set_pos(self, new_pos):
+        '''This only sets a temp variable.  Must call save() to complete update'''
+        self.pos_t = new_pos
+
+    def get_vel(self):
+        return self.vel
+
+    def set_vel(self, new_vel):
+        '''This only sets a temp variable.  Must call save() to complete update'''
+        self.vel_t = new_vel
         
-    def get_xpos(self):
-        return self.xpos
+    def get_acc(self):
+        return self.acc
 
-    def get_ypos(self):
-        return self.ypos
-
-    #doesn't actually save must call .save()
-    def set_xpos(self, new_xpos):
-        self.xpos_t = new_xpos
-
-    #doesn't actually save must call .save()
-    def set_ypos(self, new_ypos):
-        self.ypos_t = new_ypos
-
-    def get_xvel(self):
-        return self.xvel
-
-    def get_yvel(self):
-        return self.yvel
-        
-    #doesn't actually save must call .save()
-    def set_xvel(self, new_xvel):
-        self.xvel_t = new_xvel
-        
-    #doesn't actually save must call .save()
-    def set_yvel(self, new_yvel):
-        self.yvel_t = new_yvel      
-
-    def get_xacc(self):
-        return self.xacc
-
-    def get_yacc(self):
-        return self.yacc
-
-    def set_xacc(self, new_xacc):
-        self.xacc = new_xacc
-
-    def set_yacc(self, new_yacc):
-        self.yacc = new_yacc        
+    def set_acc(self, new_acc):
+        self.acc = new_acc   
 
     def get_mass(self):
         return self.mass
@@ -71,11 +51,12 @@ class SpaceObject:
     def get_radius(self):
         return self.radius    
 
-    #updates pos & vel with newer versions
     def save(self):
-        self.xpos = self.xpos_t
-        self.ypos = self.ypos_t
-        self.xvel = self.xvel_t
-        self.yvel = self.yvel_t
+        '''copies the temporary variables to the real ones'''
+        self.pos = self.pos_t
+        self.vel = self.vel_t
+
+    def get_color(self):
+        return self.color
 
 

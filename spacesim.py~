@@ -18,7 +18,7 @@ class SpaceSim:
         self.interface = interface
         self.step = 0
         self.running = True
-        getcontext().prec = 1
+        getcontext().prec = 9
 
     def run(self):
     
@@ -80,8 +80,8 @@ class SpaceSim:
                 F_p = self.G * (secondary_mass * primary_mass) / ((secondary_y_pos - primary_y_pos)**2 + (secondary_x_pos - primary_x_pos)**2)
 
                 
-                primary_x_force = primary_x_force) + (F_p * cos(theta))
-                primary_y_force = primary_y_force) + (F_p * sin(theta))
+                primary_x_force = primary_x_force + (F_p * cos(theta))
+                primary_y_force = primary_y_force + (F_p * sin(theta))
 
 
 

@@ -15,7 +15,7 @@ moon = SpaceObject('moon', .01, 2, 1000, 500, 1, -13)
 
 rotmoon1 = SpaceObject('moon 1', 2, 2, 4000, 400, 0, 1)
 sun = SpaceObject('sun', 100000, 100, 400, 400, 0, 0)
-rotmoon2 = SpaceObject('moon 2', .75, 5, 40000, 400, 0, -3)
+rotmoon2 = SpaceObject('moon 2', .75, 5, 3400, 400, 0, -3)
 rotmoon3 = SpaceObject('moon 4', .35, 9, 1000, 400, 0, -13)
 
 spaceobjects = [rotmoon1, rotmoon2, rotmoon3, sun, earth, moon]

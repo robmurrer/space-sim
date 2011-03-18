@@ -19,9 +19,6 @@ class PygameInterface:
         
         pygame.display.flip()
 
-        #console testing
-        #print 'Name \t xpos \t ypos \t xvel \t yvel \t xacc \t yacc' 
-
         #camera stuff
         self.camera_width, self.camera_height = self.background.get_size()
         self.camera_center_x = 400

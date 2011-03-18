@@ -1,28 +1,73 @@
 from spacesim import SpaceSim
 from spaceobject import SpaceObject
-from testinterface import TestInterface
+
 from pygameinterface import PygameInterface
 
-#SpaceObject(name, mass, radius, xpos, ypos, xvel, yvel)
 
-#sun = SpaceObject('sun', 1000, 10, 200, 400, 0, 0)
-earth = SpaceObject('earth', .01, 3, 400, 10000, 0, .4)
-moon = SpaceObject('moon', .01, 2, 1000, 500, 1, -13)
+sun = SpaceObject(
+    name ='sun',
+    mass = 80000,
+    radius = 100,
+    pos = (0,0),
+    vel = (0,0),
+    color = (255, 255, 0),
+)
+    
+earth = SpaceObject(
+    name ='earth',
+    mass = 100,
+    radius = 30,
+    pos = (-1000, -2000),
+    vel = (0, 6),
+    color = (0, 100, 255),
+)
 
-#ship = SpaceObject('ship', .00001, 2, 800, 800, -1, .1)
+mars = SpaceObject(
+    name ='mars',
+    mass = 100,
+    radius = 30,
+    pos = (1000, -1000),
+    vel = (0, 6),
+    color = (255, 20, 25),
+)
 
-#spaceobjects = [sun, earth, moon, ship]
+pluto = SpaceObject(
+    name ='pluto',
+    mass = 30,
+    radius = 5,
+    pos = (0, 2000),
+    vel = (-3, 0),
+    color = (100, 100, 100),
+)
 
-rotmoon1 = SpaceObject('moon 1', 2, 2, 4000, 400, 0, 1)
-sun = SpaceObject('sun', 100000, 100, 400, 400, 0, 0)
-rotmoon2 = SpaceObject('moon 2', .75, 5, 3400, 400, 0, -3)
-rotmoon3 = SpaceObject('moon 4', .35, 9, 1000, 400, 0, -13)
+moon = SpaceObject(
+    name ='moon',
+    mass = 45,
+    radius = 10,
+    pos = (1000, 1000),
+    vel = (-2, 5),
+    color = (220, 220, 220),
+)
+    
+SpaceObjects = [earth, moon, sun, mars, pluto ]
 
-spaceobjects = [rotmoon1, rotmoon2, rotmoon3, sun, earth, moon]
-interface = PygameInterface()
+interface = PygameInterface(
+    window_size = (1100, 800),
+    camera_center = (0, 0),
+    camera_zoom = .07,
+    camera_zoom_step = .9,
+    camera_scroll_step = 200,
 
-#SpaceSim(spaceobjects, gravity constant, timestep, maxstep, interface)
-sim = SpaceSim(spaceobjects, 1, 1, 1e+40, interface)
+)
+
+
+sim = SpaceSim(
+    SpaceObjects = SpaceObjects, 
+    G = 1,
+    timestep =1,
+    maxstep = 1e+40,
+    interface=interface
+)
 
 sim.run()
 
