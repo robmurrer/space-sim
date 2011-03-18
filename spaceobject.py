@@ -17,10 +17,8 @@ class SpaceObject:
         self.acc = (0,0)
 
 
-        if not kwargs['color']:
-            self.color = (255,255,255)
-        else:
-            self.color = kwargs['color']
+        self.color = kwargs.get('color', (255,255,255))
+
             
     def get_pos(self):
         return self.pos

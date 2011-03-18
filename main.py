@@ -19,7 +19,7 @@ earth = SpaceObject(
     radius = 30,
     pos = (-1000, -2000),
     vel = (0, 6),
-    color = (0, 100, 255),
+    #color = (0, 100, 255),
 )
 
 mars = SpaceObject(
