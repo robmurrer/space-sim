@@ -45,21 +45,21 @@ class PygameInterface:
                 if event.key == K_MINUS:
                     self.camera_zoom = self.camera_zoom * self.camera_zoom_step
 
-                if event.key == K_UP:
+                if event.mod == KMOD_LCTRL and event.key == K_UP:
                     self.camera_center_y = self.camera_center_y + self.camera_scroll_step * (1/self.camera_zoom)
-                if event.key == K_DOWN:
+                if event.mod== KMOD_LCTRL and event.key == K_DOWN:
                     self.camera_center_y = self.camera_center_y - self.camera_scroll_step * (1/self.camera_zoom)
-                if event.key == K_LEFT:
+                if event.mod == KMOD_LCTRL and event.key == K_LEFT:
                     self.camera_center_x = self.camera_center_x - self.camera_scroll_step * (1/self.camera_zoom)
-                if event.key == K_RIGHT:
+                if event.mod == KMOD_LCTRL and event.key == K_RIGHT:
                     self.camera_center_x = self.camera_center_x + self.camera_scroll_step * (1/self.camera_zoom)
                        
         #update each objects position
         for obj in SpaceObjects:
             #calculate screen coordinates and scale changes
-            screen_x = self.camera_width/2.0 + round((obj.get_pos()[0] - self.camera_center_x) * self.camera_zoom)
-            screen_y = self.camera_height/2.0 - round((obj.get_pos()[1] - self.camera_center_y) * self.camera_zoom)
-            screen_r = round(obj.get_radius() * self.camera_zoom)
+            screen_x = int(self.camera_width/2.0 + (obj.get_pos()[0] - self.camera_center_x) * self.camera_zoom)
+            screen_y = int(self.camera_height/2.0 - (obj.get_pos()[1] - self.camera_center_y) * self.camera_zoom)
+            screen_r = int(obj.get_radius() * self.camera_zoom)
 
             #draw object
             pygame.draw.circle(self.background, obj.get_color(), (screen_x, screen_y), screen_r, 0)
