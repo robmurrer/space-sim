@@ -8,9 +8,7 @@ class SpaceSim:
         self.SpaceObjects = kwargs['SpaceObjects']
         self.G = kwargs['G']
         self.maxstep = kwargs['maxstep']
-        self.interface = kwargs['interface']
-
-        
+        self.interface = kwargs['interface'] 
         self.step = 0
         self.running = True
 
@@ -24,7 +22,6 @@ class SpaceSim:
             if self.maxstep <= self.step:
                 self.stop()
             self.step = self.step + 1
-
             
         self.interface.close()
 
@@ -33,7 +30,7 @@ class SpaceSim:
         
     def update(self):
 
-        #calculate and sum accelerations/velocities
+        #calculate and sum accelerations
         for primary in self.SpaceObjects:
             self.__calcAcc(primary)
 
@@ -80,15 +77,13 @@ class SpaceSim:
     def __calcVelPos(self, primary):
     
         primary_pos = primary.get_pos()
-
         primary_vel = primary.get_vel()
-
         primary_acc = primary.get_acc()
 
-        
         primary_vel = ((primary_vel[0] + primary_acc[0]), (primary_vel[1] + primary_acc[1]))
         primary_pos = ((primary_pos[0] + primary_vel[0]), (primary_pos[1] + primary_vel[1]))
-
+        #primary_pos = ((primary_pos[0] + primary_vel[0] + .5 * primary_acc[0]), (primary_pos[1] + primary_vel[1] + .5 * primary_acc[1] ))
+        
         #update variables in model
         primary.set_vel(primary_vel)
         primary.set_pos(primary_pos)

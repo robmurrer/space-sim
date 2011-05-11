@@ -1,25 +1,25 @@
 #from decimal import Decimal as d
+import pygame
+from pygame.locals import *
 
-class SpaceObject:
+class SpaceObject(pygame.sprite.Sprite):
 
     def __init__(self, **kwargs):
 
         self.name = kwargs['name']
         self.mass =  kwargs['mass']
         self.radius =  kwargs['radius']
-
         self.pos =  kwargs['pos']
         self.pos_t = (0,0)
-       
         self.vel =  kwargs['vel']
-        self.vel_t = (0,0)
- 
+        self.vel_t = (0,0) 
         self.acc = (0,0)
-
-
         self.color = kwargs.get('color', (255,255,255))
 
-            
+        self.containers = []
+        #sprite __super__ ?
+        pygame.sprite.Sprite.__init__(self, self.containers)
+        
     def get_pos(self):
         return self.pos
 
@@ -57,4 +57,11 @@ class SpaceObject:
     def get_color(self):
         return self.color
 
+    def update(self):
+        pass
+
+    def draw(self, surface, x, y, r):
+        pygame.draw.circle(surface, self.color, (x, y), r, 0)
+
+        
 
