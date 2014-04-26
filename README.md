@@ -12,7 +12,7 @@ I also included a feature to keep a specific body in the center of the camera's 
 Video
 ------
 ### 3 Bodies
-<iframe width="960" height="720" src="http://www.youtube.com/embed/KKm9c603qiQ?rel=0&vq=hd720" frameborder="0" allowfullscreen></iframe>
+<http://www.youtube.com/embed/KKm9c603qiQ?rel=0&vq=hd720>
 
 Screenshot
 -----------
